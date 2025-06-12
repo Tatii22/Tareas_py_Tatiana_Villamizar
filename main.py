@@ -175,25 +175,58 @@ def gestionListas():
         opc = validarInput("Seleccione una opcion: \n", valMin=1, valMax=5)
         if opc == 1:
             if not tareas["tableros"]:
-                print("​⚠️ No hay tableros creados aún, no es posible crear listas")
+                print("​⚠️ No hay tableros creados aun.")
                 return
-            #lista = tareas["tableros"]
-            #nuevoId = max([b["codigo"] for b in lista], default=0) + 1
-            datosListas = [ 
-                    {"titulo":"Ingrese el Nombre de la lista\n", "type": "texto"}
+           
+            listaI = tareas["listas"]
+            nuevoId = max([b["codigo"] for b in listaI], default=0) + 1
+            datosLista = [ 
+                    {"titulo":"Ingrese el Nombre de la Lista\n", "type": "texto"}
                 ]
-            datos = solicitarDatos(datosListas)
-            nuevoTablero = tablero( datos[0])
+            datos = solicitarDatos(datosLista)
+            nuevaLista = tablero(nuevoId, datos[0])
             #Guardamos en tareas
-            tareas["tableros"]["listas"].append(nuevoTablero)
-            print("✅ ¡Tablero registrado exitosamente!")
-            print(tareas["tableros"])
+            tareas["listas"].append(nuevaLista)
+            print("✅ ¡Lista registrada exitosamente!")
+            print(tareas["listas"])
         elif opc == 2:
-            pass
+            print("Aun no se puede")
         elif opc == 3:
-            pass
+            listarTableros()
+            nomTab = input("🔍 Indica el nombre de la Lista que deseas actualizar: ")
+            for t in tareas["listas"]:
+                if t["nombre"] == nomTab:
+                    print(f"📖 Lista actual: {t}")
+                    campos = [
+                        {"titulo":"Ingrese el nuevo Nombre de la Lista\n", "type": "texto"}
+                    ]
+                    datos = solicitarDatos(campos)
+
+                    t["nombre"] = datos[0]
+                    print("✅ ¡Lista actualizado exitosamente!")
+                    encontrado = True
+                    break
+
+            if not encontrado and not cancelado:
+                print("❌ Lista no encontrado.")
         elif opc == 4:
-            pass
+            listarTableros()
+            nomTab = input("🔍 Indica el nombre de la Lista que deseas eliminar: ")
+            for t in tareas["listas"]:
+                if t["nombre"] == nomTab:
+                    print(f"Lista actual: {t}")
+                    confirma = input("⚠️ ¿Estas seguro de eliminarla? S o N\n")
+                    if confirma.upper() == "N":
+                        print("❎ Se cancela eliminación")
+                        cancelado = True
+                        break
+                    tareas["listas"].remove(t)
+                    print("✅ Lista eliminado.")
+                    encontrado = True
+                    break
+
+            if not encontrado:
+                print("❌ Lista no encontrado.")
         elif opc == 5:
             enterParaContinuar("¡Chaooo!")
             break
