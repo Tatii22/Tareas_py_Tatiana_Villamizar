@@ -52,7 +52,8 @@ Elige
 #Creación de biblioteca
 tareas = {
     "tableros" : [],
-    "listas":[]
+    "listas":[],
+    "tarjetas":[]
 }
 #Validaciones
 def validarInput(titulo : str, valMin: int = 0, valMax: int = 5):
@@ -97,17 +98,29 @@ def solicitarDatos(campos:list):
 
 def tablero(codigo: int, nombre: str):
     return {"codigo": codigo, "nombre": nombre}
-
+#listas
 def listarTableros():
     print("\n LISTADO DE TABLEROS\n")
     for tablero in tareas["tableros"]:
         print(f"{tablero['codigo']} {tablero['nombre']}\n")
     enterParaContinuar()
+def listarListas():
+    print("\n LISTADO DE LISTAS\n")
+    for lista in tareas["listas"]:
+        print(f"{lista['codigo']} {lista['nombre']}\n")
+    enterParaContinuar()
 
+def listarTarjetas():
+    print("\n LISTADO DE TARJETAS\n")
+    for tarjeta in tareas["tarjetas"]:
+        print(f"{tarjeta['codigo']} {tarjeta['nombre']}\n")
+    enterParaContinuar()
 # CRUD tableros
+encontrado = False
+cancelado = False
 def gestionarTablero():
     while True:
-        encontrado = False
+        
         print("GESTION DE TABLEROS")
         print(submenu)
         opc = validarInput("Seleccione una opcion: \n", valMin=1, valMax=5)
@@ -141,7 +154,7 @@ def gestionarTablero():
                     encontrado = True
                     break
 
-            if not encontrado and not cancelado:
+            if not encontrado:
                 print("❌ Tablero no encontrado.")
         elif opc == 4:
             listarTableros()
@@ -159,10 +172,10 @@ def gestionarTablero():
                     encontrado = True
                     break
 
-            if not encontrado:
+            if not encontrado and not cancelado:
                 print("❌ Tablero no encontrado.")
         elif opc == 5:
-            enterParaContinuar("¡Chaooo!")
+            enterParaContinuar()
             break
         else:
             enterParaContinuar("ESTA MAL, INTENTALO DE NUEVO")
@@ -192,7 +205,7 @@ def gestionListas():
         elif opc == 2:
             print("Aun no se puede")
         elif opc == 3:
-            listarTableros()
+            listarListas()
             nomTab = input("🔍 Indica el nombre de la Lista que deseas actualizar: ")
             for t in tareas["listas"]:
                 if t["nombre"] == nomTab:
@@ -207,10 +220,10 @@ def gestionListas():
                     encontrado = True
                     break
 
-            if not encontrado and not cancelado:
+            if not encontrado:
                 print("❌ Lista no encontrado.")
         elif opc == 4:
-            listarTableros()
+            listarListas()
             nomTab = input("🔍 Indica el nombre de la Lista que deseas eliminar: ")
             for t in tareas["listas"]:
                 if t["nombre"] == nomTab:
@@ -225,10 +238,77 @@ def gestionListas():
                     encontrado = True
                     break
 
-            if not encontrado:
+            if not encontrado and not cancelado:
                 print("❌ Lista no encontrado.")
         elif opc == 5:
-            enterParaContinuar("¡Chaooo!")
+            enterParaContinuar()
+            break
+        else:
+            enterParaContinuar("ESTA MAL, INTENTALO DE NUEVO")
+
+#CRUD GESTION DE TARJETAS
+def gestionTarjetas():
+    while True:
+        print("GESTION DE TARJETAS")
+        print(submenu)
+        opc = validarInput("Seleccione una opcion: \n", valMin=1, valMax=5)
+        if opc == 1:
+            if not tareas["listas"]:
+                print("​⚠️ No hay listas creadas aun.")
+                return
+           
+            listaI = tareas["tarjetas"]
+            nuevoId = max([b["codigo"] for b in listaI], default=0) + 1
+            datosTarjeta = [ 
+                    {"titulo":"Ingrese el Nombre de la tarjeta\n", "type": "texto"}
+                ]
+            datos = solicitarDatos(datosTarjeta)
+            nuevaTarjeta = tablero(nuevoId, datos[0])
+            #Guardamos en tareas
+            tareas["tarjetas"].append(nuevaTarjeta)
+            print("✅ ¡Tarjeta registrada exitosamente!")
+            print(tareas["tarjetas"])
+        elif opc == 2:
+            print("Todas en general")
+            listarTarjetas()
+        elif opc == 3:
+            listarTarjetas()
+            nomTab = input("🔍 Indica el nombre de la Tarjeta que deseas actualizar: ")
+            for t in tareas["tarjetas"]:
+                if t["nombre"] == nomTab:
+                    print(f"Tarjeta actual: {t}")
+                    campos = [
+                        {"titulo":"Ingrese el nuevo Nombre de la Tarjeta\n", "type": "texto"}
+                    ]
+                    datos = solicitarDatos(campos)
+
+                    t["nombre"] = datos[0]
+                    print("✅ ¡Tarjeta actualizado exitosamente!")
+                    encontrado = True
+                    break
+
+            if not encontrado:
+                print("❌ Tarjeta no encontrado.")
+        elif opc == 4:
+            listarTarjetas()
+            nomTab = input("🔍 Indica el nombre de la Tarjeta que deseas eliminar: ")
+            for t in tareas["tarjetas"]:
+                if t["nombre"] == nomTab:
+                    print(f"Tarjeta actual: {t}")
+                    confirma = input("⚠️ ¿Estas seguro de eliminarla? S o N\n")
+                    if confirma.upper() == "N":
+                        print("❎ Se cancela eliminación")
+                        cancelado = True
+                        break
+                    tareas["tarjetas"].remove(t)
+                    print("✅ Tarjeta eliminado.")
+                    encontrado = True
+                    break
+
+            if not encontrado and not cancelado:
+                print("❌ Tarjeta no encontrado.")
+        elif opc == 5:
+            enterParaContinuar()
             break
         else:
             enterParaContinuar("ESTA MAL, INTENTALO DE NUEVO")
@@ -241,7 +321,7 @@ while True:
     elif opc == 2:
         gestionListas()
     elif opc == 3:
-        pass
+        gestionTarjetas()
     elif opc == 4:
         enterParaContinuar("¡Chaooo!")
         break
