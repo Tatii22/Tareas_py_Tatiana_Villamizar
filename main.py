@@ -24,38 +24,6 @@ def validarInput(titulo : str, valMin: int = 0, valMax: int = 5):
         except:
             enterParaContinuar("ESTA MAL, INTENTALO DE NUEVO")
 
-
-menu = """
-,---.    ,---.    .-''-.  ,---.   .--.  ___    _ 
-|    \  /    |  .'_ _   \ |    \  |  |.'   |  | |
-|  ,  \/  ,  | / ( ` )   '|  ,  \ |  ||   .'  | |
-|  |\_   /|  |. (_ o _)  ||  |\_ \|  |.'  '_  | |
-|  _( )_/ |  ||  (_,_)___||  _( )_\  |'   ( \.-.|
-| (_ o _) |  |'  \   .---.| (_ o _)  |' (`. _` /|
-|  (_,_)  |  | \  `-'    /|  (_,_)\  || (_ (_) _)
-|  |      |  |  \       / |  |    |  | \ /  . \ /
-'--'      '--'   `'-..-'  '--'    '--'  ``-'`-'' 
-
-1. Gestion de tableros
-2. Gestion de listas
-3. Gestion de tarjetas 
-4. ❌ Salir  
-"""
-submenu = """
-Elige
-1.Crear
-2.Visualizar
-3.Actualizar
-4.Eliminar
-5.❌ Salir  
-"""
-#Creación de biblioteca
-tareas = {
-    "tableros" : [],
-    "listas":[],
-    "tarjetas":[]
-}
-#Validaciones
 def validarInput(titulo : str, valMin: int = 0, valMax: int = 5):
     while True:
         try:
@@ -98,6 +66,40 @@ def solicitarDatos(campos:list):
 
 def tablero(codigo: int, nombre: str):
     return {"codigo": codigo, "nombre": nombre}
+
+
+#MENUS
+menu = """
+,---.    ,---.    .-''-.  ,---.   .--.  ___    _ 
+|    \  /    |  .'_ _   \ |    \  |  |.'   |  | |
+|  ,  \/  ,  | / ( ` )   '|  ,  \ |  ||   .'  | |
+|  |\_   /|  |. (_ o _)  ||  |\_ \|  |.'  '_  | |
+|  _( )_/ |  ||  (_,_)___||  _( )_\  |'   ( \.-.|
+| (_ o _) |  |'  \   .---.| (_ o _)  |' (`. _` /|
+|  (_,_)  |  | \  `-'    /|  (_,_)\  || (_ (_) _)
+|  |      |  |  \       / |  |    |  | \ /  . \ /
+'--'      '--'   `'-..-'  '--'    '--'  ``-'`-'' 
+
+1. Gestion de tableros
+2. Gestion de listas
+3. Gestion de tarjetas 
+4. ❌ Salir  
+"""
+submenu = """
+Elige
+1.Crear
+2.Visualizar
+3.Actualizar
+4.Eliminar
+5.❌ Salir  
+"""
+#Creación de biblioteca
+tareas = {
+    "tableros" : [],
+    "listas":[],
+    "tarjetas":[]
+}
+
 #listas
 def listarTableros():
     print("\n LISTADO DE TABLEROS\n")
@@ -109,7 +111,6 @@ def listarListas():
     for lista in tareas["listas"]:
         print(f"{lista['codigo']} {lista['nombre']}\n")
     enterParaContinuar()
-
 def listarTarjetas():
     print("\n LISTADO DE TARJETAS\n")
     for tarjeta in tareas["tarjetas"]:
