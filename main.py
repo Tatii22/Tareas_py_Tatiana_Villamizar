@@ -207,6 +207,7 @@ def gestionListas():
             print(tareas["listas"])
         elif opc == 2:
             print("Aun no se puede")
+            listarListas()
         elif opc == 3:
             listarListas()
             nomTab = input("🔍 Indica el nombre de la Lista que deseas actualizar: ")
