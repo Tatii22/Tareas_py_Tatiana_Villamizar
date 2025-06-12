@@ -8,6 +8,7 @@ import json
     #Crear, mostrar, actualizar, eliminar
 #Datos almacenados en json
 #----
+nomArchivo = "Gestor_Tareas.json"
 #Validaciones
 def enterParaContinuar(mensaje : str = "Enter para continuar..."):
     input(mensaje)
@@ -83,7 +84,8 @@ menu = """
 1. Gestion de tableros
 2. Gestion de listas
 3. Gestion de tarjetas 
-4. ❌ Salir  
+4. Cargar datos
+5. ❌ Salir  
 """
 submenu = """
 Elige
@@ -314,9 +316,17 @@ def gestionTarjetas():
         else:
             enterParaContinuar("ESTA MAL, INTENTALO DE NUEVO")
 
+def asignarOrden():
+    pass
+
+def guardarDatos(nomArchivo = "Gestor_Tareas.json"):
+    with open(nomArchivo,'w',encoding='utf-8') as archivo:
+        json.dump(tareas, archivo, indent=4)
+        
+
 while True:
     print(menu)
-    opc = validarInput("Seleccione una opcion: \n", valMin=1, valMax=7)
+    opc = validarInput("Seleccione una opcion: \n", valMin=1, valMax=5)
     if opc == 1:
         gestionarTablero()
     elif opc == 2:
@@ -324,6 +334,8 @@ while True:
     elif opc == 3:
         gestionTarjetas()
     elif opc == 4:
+        guardarDatos()
+    elif opc == 5:
         enterParaContinuar("¡Chaooo!")
         break
     else:
