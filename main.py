@@ -11,10 +11,6 @@ import json
 nomArchivo = "Gestor_Tareas.json"
 
 def cargarDatos():
-    with open(nomArchivo, 'r') as archivo:
-        return json.load(archivo)
-
-def cargarDatos():
     try:
         with open(nomArchivo, 'r') as archivo:
             return json.load(archivo)
