@@ -3,8 +3,39 @@
         {
             "codigo": 1,
             "nombre": "yoga"
+        },
+        {
+            "codigo": 2,
+            "nombre": "Aseo"
         }
     ],
-    "listas": [],
-    "tarjetas": []
+    "listas": [
+        {
+            "Nombre tablero": "yoga",
+            "codigo": 1,
+            "nombre": "posturas"
+        },
+        {
+            "Nombre tablero": "Aseo",
+            "codigo": 2,
+            "nombre": "sala"
+        }
+    ],
+    "tarjetas": [
+        {
+            "Nombre lista": "posturas",
+            "codigo": 1,
+            "nombre": "saludo al sol"
+        },
+        {
+            "Nombre lista": "posturas",
+            "codigo": 2,
+            "nombre": "gato"
+        },
+        {
+            "Nombre lista": "sala",
+            "codigo": 3,
+            "nombre": "lavar mueble"
+        }
+    ]
 }
